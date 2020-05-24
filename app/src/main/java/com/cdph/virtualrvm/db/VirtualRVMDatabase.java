@@ -109,32 +109,23 @@ public class VirtualRVMDatabase
 		return data;
 	}
 	
-	public List<ArrayList<String>> getAllUserData()
-	{
-		SQLiteDatabase db = helper.getWritableDatabase();
-		//Cursor cursor = db.rawQuery("SELECT * FROM tb_users", null);
-		Cursor cursor = db.query(helper.TB_USER, null, null, null, null, null, null);
-		
-		if(cursor == null || cursor.getCount() < 1)
-			return null;
-			
-		if(users.size() >= cursor.getCount())
-			users.clear();
-		
-		for(int i = 0; i < cursor.getCount(); i++)
-		{
-			cursor.moveToNext();
-			ArrayList<String> userData = new ArrayList<>();
-			userData.add(cursor.getString(cursor.getColumnIndexOrThrow(helper.COL_USER)));
-			userData.add(cursor.getString(cursor.getColumnIndexOrThrow(helper.COL_PASS)));
-			userData.add(cursor.getString(cursor.getColumnIndexOrThrow(helper.COL_CENT)));
-			userData.add(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(helper.COL_RANK))));
-			users.add(userData);
-		}
-		
-		cursor.close();
-		return users;
-	}
+	
+   public List<ArrayList<String>> getAllUserData()
+        Cursor cursor = db.rawQuery("SELECT * FROM tb_users", null);
+        if (cursor.moveToFirst()) {
+            do {
+                ArrayList<String> userData = new ArrayList<>();
+				userData.add(cursor.getString(cursor.getColumnIndexOrThrow(helper.COL_USER)));
+				userData.add(cursor.getString(cursor.getColumnIndexOrThrow(helper.COL_PASS)));
+				userData.add(cursor.getString(cursor.getColumnIndexOrThrow(helper.COL_CENT)));
+				userData.add(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(helper.COL_RANK))));
+				users.add(userData);
+                ));
+            } while (cursor.moveToNext());
+        }
+         cursor.close();
+        return users;
+    }
 	
 	public List<ArrayList<String>> getAllItemData()
 	{
