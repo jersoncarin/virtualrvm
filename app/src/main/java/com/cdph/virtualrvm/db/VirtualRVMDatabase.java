@@ -124,7 +124,7 @@ public class VirtualRVMDatabase
             } while (cursor.moveToNext());
         }
          cursor.close();
-        return users;
+        return userData;
     }
 	
 	public List<ArrayList<String>> getAllItemData()
